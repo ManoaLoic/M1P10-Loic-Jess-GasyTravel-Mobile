@@ -2,17 +2,27 @@ package com.example.gasytravel
 
 import android.content.Intent
 import android.os.Bundle
-import com.google.android.material.appbar.CollapsingToolbarLayout
-import com.google.android.material.floatingactionbutton.FloatingActionButton
-import com.google.android.material.snackbar.Snackbar
 import androidx.appcompat.app.AppCompatActivity
 import android.view.Menu
 import android.view.MenuItem
+import android.view.View
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
+import com.example.gasytravel.adapter.ScrollingActivityAdapter
 import com.example.gasytravel.databinding.ActivityScrollingBinding
+import com.example.gasytravel.model.TvShow
+import android.os.Handler
+import android.util.Log
 
 class ScrollingActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityScrollingBinding
+    private val TAG = ScrollingActivity::class.java.simpleName
+    private lateinit var mainActivityAdapter: ScrollingActivityAdapter
+    private var currentPage = 1
+    private var totalAvailablePages = 5
+    private lateinit var tvShowList: ArrayList<TvShow>
+    private var isLoadMore : Boolean = false
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -27,6 +37,107 @@ class ScrollingActivity : AppCompatActivity() {
             startActivity(intent)
 //            Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
 //                .setAction("Action", null).show()
+        }
+
+        initViews()
+
+    }
+
+    private fun initViews() {
+        binding.recyclerview.setHasFixedSize(true)
+        binding.recyclerview.layoutManager =
+            LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false)
+        tvShowList = ArrayList()
+        mainActivityAdapter = ScrollingActivityAdapter(supportFragmentManager)
+        binding.recyclerview.adapter = mainActivityAdapter
+        binding.recyclerview.addOnScrollListener(object : RecyclerView.OnScrollListener() {
+            override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
+                super.onScrolled(recyclerView, dx, dy)
+
+                // Calculate the distance between the current scroll position and the end of the RecyclerView
+                val totalItemCount = recyclerView.layoutManager?.itemCount ?: 0
+                val lastVisibleItemPosition = (recyclerView.layoutManager as? LinearLayoutManager)?.findLastVisibleItemPosition() ?: 0
+                val distanceToEnd = totalItemCount - lastVisibleItemPosition - 1
+
+//                Log.e("DEBUG", "Onscroll event fired ${distanceToEnd}")
+
+                // Check if the distance to the end is smaller than the specified offset
+                if (distanceToEnd <= 2) {
+                    if (currentPage <= totalAvailablePages && !isLoadMore) {
+                        isLoadMore = true
+                        Log.e("DEBUG", "Called on  ${distanceToEnd} page = ${currentPage}")
+                        currentPage += 1
+                        loadPageList()
+                    }
+                }
+            }
+        })
+        loadPageList()
+    }
+
+    private fun loadPageList() {
+        toogleLoading()
+        val oldCount = tvShowList.size
+        val handler = Handler()
+        val timeoutInMillis : Long = 5
+        handler.postDelayed({
+            totalAvailablePages = 5
+            val temp = mutableListOf<TvShow>()
+            temp.add(TvShow(1, "Show 1", "Ongoing", "https://example.com/show1_thumbnail.jpg"))
+            temp.add(TvShow(2, "Show 1", "Ongoing", "https://example.com/show1_thumbnail.jpg"))
+            temp.add(TvShow(3, "Show 1", "Ongoing", "https://example.com/show1_thumbnail.jpg"))
+            temp.add(TvShow(4, "Show 1", "Ongoing", "https://example.com/show1_thumbnail.jpg"))
+            temp.add(TvShow(5, "Show 1", "Ongoing", "https://example.com/show1_thumbnail.jpg"))
+            temp.add(TvShow(6, "Show 1", "Ongoing", "https://example.com/show1_thumbnail.jpg"))
+            temp.add(TvShow(1, "Show 1", "Ongoing", "https://example.com/show1_thumbnail.jpg"))
+            temp.add(TvShow(1, "Show 1", "Ongoing", "https://example.com/show1_thumbnail.jpg"))
+            temp.add(TvShow(1, "Show 1", "Ongoing", "https://example.com/show1_thumbnail.jpg"))
+            temp.add(TvShow(1, "Show 1", "Ongoing", "https://example.com/show1_thumbnail.jpg"))
+            tvShowList.addAll(temp)
+            mainActivityAdapter.updateList(tvShowList, oldCount, tvShowList.size)
+            isLoadMore = false
+            toogleLoading()
+        }, timeoutInMillis)
+//        apiClient.callTvShowListRequest(currentPage, object : Callback<ShowModel> {
+//            override fun onResponse(call: Call<ShowModel>, response: Response<ShowModel>) {
+//                if (response.isSuccessful) {
+//                    val showModel = response.body()
+//                    if (showModel != null) {
+//                        val oldCount = tvShowList.size
+//                        totalAvailablePages = showModel.pages
+//                        tvShowList.addAll(showModel.tvShows)
+//                        mainActivityAdapter.updateList(tvShowList, oldCount, tvShowList.size)
+//                        Log.e(
+//                            TAG,
+//                            "oldCount $oldCount totalAvailablePages $totalAvailablePages tvShowList ${tvShowList.size}"
+//                        )
+//                    }
+//                }
+//                toogleLoading()
+//            }
+//
+//            override fun onFailure(call: Call<ShowModel>, t: Throwable) {
+//                t.printStackTrace()
+//                Log.e(TAG, "exception", t)
+//                toogleLoading()
+//            }
+//        })
+    }
+
+    private fun toogleLoading() {
+        Log.e("Debug", "Current page for Loading ${currentPage}")
+        if (currentPage == 1) {
+            if (binding.defaultProgress.isShown) {
+                binding.defaultProgress.visibility = View.GONE
+            } else {
+                binding.defaultProgress.visibility = View.VISIBLE
+            }
+        } else {
+            if (binding.loadMoreProgress.isShown) {
+                binding.loadMoreProgress.visibility = View.GONE
+            } else {
+                binding.loadMoreProgress.visibility = View.VISIBLE
+            }
         }
     }
 
