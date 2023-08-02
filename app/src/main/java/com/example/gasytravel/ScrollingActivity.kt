@@ -13,6 +13,12 @@ import com.example.gasytravel.databinding.ActivityScrollingBinding
 import com.example.gasytravel.model.TvShow
 import android.os.Handler
 import android.util.Log
+import com.example.gasytravel.model.GetPostsModel
+import com.example.gasytravel.model.Post
+import com.example.gasytravel.service.ApiClient
+import retrofit2.Call
+import retrofit2.Callback
+import retrofit2.Response
 
 class ScrollingActivity : AppCompatActivity() {
 
@@ -21,8 +27,9 @@ class ScrollingActivity : AppCompatActivity() {
     private lateinit var mainActivityAdapter: ScrollingActivityAdapter
     private var currentPage = 1
     private var totalAvailablePages = 5
-    private lateinit var tvShowList: ArrayList<TvShow>
+    private lateinit var posts: ArrayList<Post>
     private var isLoadMore : Boolean = false
+    private var apiClient = ApiClient()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -35,8 +42,6 @@ class ScrollingActivity : AppCompatActivity() {
         binding.fab.setOnClickListener { view ->
             val intent = Intent(this, SettingsActivity::class.java)
             startActivity(intent)
-//            Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-//                .setAction("Action", null).show()
         }
 
         initViews()
@@ -47,7 +52,7 @@ class ScrollingActivity : AppCompatActivity() {
         binding.recyclerview.setHasFixedSize(true)
         binding.recyclerview.layoutManager =
             LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false)
-        tvShowList = ArrayList()
+        posts = ArrayList()
         mainActivityAdapter = ScrollingActivityAdapter(supportFragmentManager)
         binding.recyclerview.adapter = mainActivityAdapter
         binding.recyclerview.addOnScrollListener(object : RecyclerView.OnScrollListener() {
@@ -77,51 +82,51 @@ class ScrollingActivity : AppCompatActivity() {
 
     private fun loadPageList() {
         toogleLoading()
-        val oldCount = tvShowList.size
+        val oldCount = posts.size
         val handler = Handler()
         val timeoutInMillis : Long = 5
-        handler.postDelayed({
-            totalAvailablePages = 5
-            val temp = mutableListOf<TvShow>()
-            temp.add(TvShow(1, "Show 1", "Ongoing", "https://example.com/show1_thumbnail.jpg"))
-            temp.add(TvShow(2, "Show 1", "Ongoing", "https://example.com/show1_thumbnail.jpg"))
-            temp.add(TvShow(3, "Show 1", "Ongoing", "https://example.com/show1_thumbnail.jpg"))
-            temp.add(TvShow(4, "Show 1", "Ongoing", "https://example.com/show1_thumbnail.jpg"))
-            temp.add(TvShow(5, "Show 1", "Ongoing", "https://example.com/show1_thumbnail.jpg"))
-            temp.add(TvShow(6, "Show 1", "Ongoing", "https://example.com/show1_thumbnail.jpg"))
-            temp.add(TvShow(1, "Show 1", "Ongoing", "https://example.com/show1_thumbnail.jpg"))
-            temp.add(TvShow(1, "Show 1", "Ongoing", "https://example.com/show1_thumbnail.jpg"))
-            temp.add(TvShow(1, "Show 1", "Ongoing", "https://example.com/show1_thumbnail.jpg"))
-            temp.add(TvShow(1, "Show 1", "Ongoing", "https://example.com/show1_thumbnail.jpg"))
-            tvShowList.addAll(temp)
-            mainActivityAdapter.updateList(tvShowList, oldCount, tvShowList.size)
-            isLoadMore = false
-            toogleLoading()
-        }, timeoutInMillis)
-//        apiClient.callTvShowListRequest(currentPage, object : Callback<ShowModel> {
-//            override fun onResponse(call: Call<ShowModel>, response: Response<ShowModel>) {
-//                if (response.isSuccessful) {
-//                    val showModel = response.body()
-//                    if (showModel != null) {
-//                        val oldCount = tvShowList.size
-//                        totalAvailablePages = showModel.pages
-//                        tvShowList.addAll(showModel.tvShows)
-//                        mainActivityAdapter.updateList(tvShowList, oldCount, tvShowList.size)
-//                        Log.e(
-//                            TAG,
-//                            "oldCount $oldCount totalAvailablePages $totalAvailablePages tvShowList ${tvShowList.size}"
-//                        )
-//                    }
-//                }
-//                toogleLoading()
-//            }
-//
-//            override fun onFailure(call: Call<ShowModel>, t: Throwable) {
-//                t.printStackTrace()
-//                Log.e(TAG, "exception", t)
-//                toogleLoading()
-//            }
-//        })
+//        handler.postDelayed({
+//            totalAvailablePages = 5
+//            val temp = mutableListOf<TvShow>()
+//            temp.add(TvShow(1, "Show 1", "Ongoing", "https://example.com/show1_thumbnail.jpg"))
+//            temp.add(TvShow(2, "Show 1", "Ongoing", "https://example.com/show1_thumbnail.jpg"))
+//            temp.add(TvShow(3, "Show 1", "Ongoing", "https://example.com/show1_thumbnail.jpg"))
+//            temp.add(TvShow(4, "Show 1", "Ongoing", "https://example.com/show1_thumbnail.jpg"))
+//            temp.add(TvShow(5, "Show 1", "Ongoing", "https://example.com/show1_thumbnail.jpg"))
+//            temp.add(TvShow(6, "Show 1", "Ongoing", "https://example.com/show1_thumbnail.jpg"))
+//            temp.add(TvShow(1, "Show 1", "Ongoing", "https://example.com/show1_thumbnail.jpg"))
+//            temp.add(TvShow(1, "Show 1", "Ongoing", "https://example.com/show1_thumbnail.jpg"))
+//            temp.add(TvShow(1, "Show 1", "Ongoing", "https://example.com/show1_thumbnail.jpg"))
+//            temp.add(TvShow(1, "Show 1", "Ongoing", "https://example.com/show1_thumbnail.jpg"))
+//            tvShowList.addAll(temp)
+//            mainActivityAdapter.updateList(tvShowList, oldCount, tvShowList.size)
+//            isLoadMore = false
+//            toogleLoading()
+//        }, timeoutInMillis)
+        apiClient.callGetPosts(currentPage, object : Callback<GetPostsModel> {
+            override fun onResponse(call: Call<GetPostsModel>, response: Response<GetPostsModel>) {
+                if (response.isSuccessful) {
+                    val getPostModel = response.body()
+                    if (getPostModel != null) {
+                        val oldCount = posts.size
+                        totalAvailablePages = getPostModel.maxPage
+                        posts.addAll(getPostModel.docs)
+                        mainActivityAdapter.updateList(posts, oldCount, posts.size)
+                        Log.e(
+                            TAG,
+                            "oldCount $oldCount totalAvailablePages $totalAvailablePages tvShowList ${posts.size}"
+                        )
+                    }
+                }
+                toogleLoading()
+            }
+
+            override fun onFailure(call: Call<GetPostsModel>, t: Throwable) {
+                t.printStackTrace()
+                Log.e(TAG, "exception", t)
+                toogleLoading()
+            }
+        })
     }
 
     private fun toogleLoading() {
