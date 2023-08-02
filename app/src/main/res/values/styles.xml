@@ -1,0 +1,27 @@
+<resources>
+
+    <!-- Thème par défaut de l'application sans ActionBar -->
+    <style name="AppTheme" parent="Theme.AppCompat.Light.NoActionBar">
+        <!-- Customize your theme here. -->
+        <!-- Cacher l'icône de l'application dans la barre d'action -->
+        <item name="android:icon">@android:color/transparent</item>
+        <!-- Cacher l'icône de l'application dans le style de la ActionBar -->
+        <item name="android:actionBarStyle">@style/Widget.Theme.GasyTravel.ActionBar.Fullscreen</item>
+    </style>
+
+    <!-- Style pour cacher l'icône de l'application dans la ActionBar -->
+    <style name="Widget.Theme.GasyTravel.ActionBar.Fullscreen" parent="Widget.AppCompat.ActionBar">
+        <item name="android:background">@color/black_overlay</item>
+        <item name="android:icon">@android:color/transparent</item>
+    </style>
+
+    <!-- Thème de l'écran de démarrage (Splash Screen) sans ActionBar -->
+    <style name="SplashTheme" parent="Theme.AppCompat.NoActionBar">
+        <!-- Définir l'arrière-plan de l'écran de démarrage avec votre image -->
+        <item name="android:windowBackground">@mipmap/ic_launcher</item>
+        <!-- Cacher la barre d'action et rendre l'activité en plein écran -->
+        <item name="android:windowActionBar">false</item>
+        <item name="android:windowFullscreen">true</item>
+    </style>
+
+</resources>
