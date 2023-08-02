@@ -151,6 +151,12 @@
         vestibulum. Fusce dictum libero quis erat maximus, vitae volutpat diam dignissim.
     </string>
     <string name="title_activity_splash">ActivitySplash</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="title_activity_detail_detail_host">DetailDetailHostActivity</string>
+    <string name="title_detail_list">Details</string>
+    <string name="title_detail_detail">Detail Detail</string>
+    <string name="title_activity_detail">Detail</string>
     <string name="dummy_button">Dummy Button</string>
     <string name="dummy_content">DUMMY\nCONTENT</string>
 </resources>

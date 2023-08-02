@@ -1,6 +1,6 @@
 <resources>
 
-    <!-- Thème par défaut de l'application sans ActionBar -->
+<!-- Thème par défaut de l'application sans ActionBar -->
     <style name="AppTheme" parent="Theme.AppCompat.Light.NoActionBar">
         <!-- Customize your theme here. -->
         <!-- Cacher l'icône de l'application dans la barre d'action -->
@@ -24,4 +24,12 @@
         <item name="android:windowFullscreen">true</item>
     </style>
 
+    <style name="Widget.Theme.GasyTravel.ActionBar.Fullscreen" parent="Widget.AppCompat.ActionBar">
+        <item name="android:background">@color/black_overlay</item>
+    </style>
+
+    <style name="Widget.Theme.GasyTravel.ButtonBar.Fullscreen" parent="">
+        <item name="android:background">@color/black_overlay</item>
+        <item name="android:buttonBarStyle">?android:attr/buttonBarStyle</item>
+    </style>
 </resources>

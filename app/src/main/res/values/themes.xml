@@ -28,6 +28,15 @@
         <!-- <item name="colorPrimary">@color/my_light_primary</item> -->
     </style>
 
+    <style name="NoActionBar">
+        <item name="windowActionBar">false</item>
+        <item name="windowNoTitle">true</item>
+    </style>
+
+    <style name="AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar" />
+
+    <style name="PopupOverlay" parent="ThemeOverlay.AppCompat.Light" />
+
     <style name="Theme.GasyTravel.Fullscreen" parent="Theme.GasyTravel">
         <item name="android:actionBarStyle">@style/Widget.Theme.GasyTravel.ActionBar.Fullscreen
         </item>
