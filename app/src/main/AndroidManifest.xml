@@ -7,9 +7,17 @@
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
-        android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
-        android:theme="@style/Theme.GasyTravel">
+        android:theme="@style/AppTheme"> <!-- Utilise le thème sans ActionBar -->
+
+
+
+        <!-- Autres activités (FicheActivity, SettingsActivity, ScrollingActivity) -->
+        <activity
+            android:name=".FicheActivity"
+            android:exported="true"
+            android:label="@string/title_activity_fiche"
+            android:theme="@style/AppTheme" /> <!-- Utilise le thème sans ActionBar -->
         <activity
             android:name=".Detail"
             android:configChanges="orientation|keyboardHidden|screenSize"
@@ -19,18 +27,25 @@
         <activity
             android:name=".SettingsActivity"
             android:exported="false"
-            android:label="@string/title_activity_settings" />
+            android:label="@string/title_activity_settings"
+            android:theme="@style/AppTheme" /> <!-- Utilise le thème sans ActionBar -->
         <activity
             android:name=".ScrollingActivity"
             android:exported="true"
             android:label="@string/app_name"
-            android:theme="@style/Theme.GasyTravel.NoActionBar">
+            android:theme="@style/AppTheme" /> <!-- Utilise le thème sans ActionBar -->
+
+        <!-- Activité Splash avec le thème spécifique -->
+        <activity
+            android:name=".ActivitySplash"
+            android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+
     </application>
 
 </manifest>

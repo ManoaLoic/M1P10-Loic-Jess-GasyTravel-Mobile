@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:padding="16dp"
+    android:background="@android:color/white">
+
+    <ImageView
+        android:id="@+id/imageViewDestination"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        android:layout_width="match_parent"
+        android:layout_height="200dp"
+        android:scaleType="centerCrop"
+        android:src="@drawable/destination"
+        tools:layout_editor_absoluteX="8dp"
+        tools:layout_editor_absoluteY="265dp" />
+
+    <TextView
+        android:id="@+id/textViewDestinationName"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/imageViewDestination"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Nom de la destination"
+        android:textColor="@android:color/black"
+        android:textSize="24sp"
+        tools:layout_editor_absoluteX="5dp"
+        tools:layout_editor_absoluteY="114dp" />
+
+    <TextView
+        android:id="@+id/textViewDescription"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/textViewDestinationName"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Description de la destination. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce eget mauris ut elit rhoncus facilisis."
+        android:textColor="@android:color/darker_gray"
+        android:textSize="18sp"
+        tools:layout_editor_absoluteX="-1dp"
+        tools:layout_editor_absoluteY="185dp" />
+
+    <Button
+        android:id="@+id/buttonExplore"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/textViewDescription"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="@color/colorPrimary"
+        android:text="Explorer"
+        android:textColor="@android:color/white"
+        tools:layout_editor_absoluteX="230dp"
+        tools:layout_editor_absoluteY="495dp" />
+
+    <Button
+        android:id="@+id/buttonBook"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/textViewDescription"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="@color/colorPrimary"
+        android:text="Réserver"
+        android:textColor="@android:color/white"
+        tools:layout_editor_absoluteX="6dp"
+        tools:layout_editor_absoluteY="491dp" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>
