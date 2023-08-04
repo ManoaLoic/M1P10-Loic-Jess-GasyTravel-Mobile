@@ -9,6 +9,7 @@ import androidx.fragment.app.FragmentManager
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.example.gasytravel.Detail
+import com.example.gasytravel.FicheActivity
 import com.example.gasytravel.R
 import com.example.gasytravel.databinding.ShowListRawBinding
 import com.example.gasytravel.model.Post
@@ -34,15 +35,15 @@ class ScrollingActivityAdapter(private val fragmentManager: FragmentManager) :
             .with(holder.itemView)
             .load(post.brand)
             .centerCrop()
-            .placeholder(R.drawable.ic_launcher_foreground)
+            .placeholder(R.drawable.loading)
             .into(holder.binding.brandingImage)
 
         holder.bind(post, object : OnItemClickListener {
-            override fun onItemClick(context: Context, tvShow: Post) {
+            override fun onItemClick(context: Context, post: Post) {
                 // Handle the click event here, e.g., start a new activity
-                val intent = Intent(context, Detail::class.java)
+                val intent = Intent(context, FicheActivity::class.java)
                 // Pass any data to the new activity if needed
-                // intent.putExtra("KEY", value)
+                intent.putExtra("id", post.id)
                 context.startActivity(intent)
             }
         })

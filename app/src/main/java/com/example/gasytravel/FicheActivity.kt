@@ -1,19 +1,25 @@
 package com.example.gasytravel
 
 import android.os.Bundle
-import com.google.android.material.snackbar.Snackbar
+import android.util.Log
+import com.example.gasytravel.databinding.ActivityFicheBinding
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.WindowCompat
-import androidx.navigation.findNavController
-import androidx.navigation.ui.AppBarConfiguration
-import androidx.navigation.ui.navigateUp
-import androidx.navigation.ui.setupActionBarWithNavController
-import com.example.gasytravel.databinding.ActivityFicheBinding
+import com.example.gasytravel.model.GetPostsModel
+import com.example.gasytravel.model.Post
+import com.example.gasytravel.service.ApiClient
+import retrofit2.Call
+import retrofit2.Callback
+import retrofit2.Response
+import com.example.gasytravel.databinding.ContentFicheBinding
+import androidx.core.text.HtmlCompat
+import com.bumptech.glide.Glide
+
 
 class FicheActivity : AppCompatActivity() {
 
-    private lateinit var appBarConfiguration: AppBarConfiguration
     private lateinit var binding: ActivityFicheBinding
+    private lateinit var contentBinding: ContentFicheBinding
 
     override fun onCreate(savedInstanceState: Bundle?) {
         WindowCompat.setDecorFitsSystemWindows(window, false)
@@ -22,19 +28,49 @@ class FicheActivity : AppCompatActivity() {
         binding = ActivityFicheBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
+        contentBinding = ContentFicheBinding.inflate(layoutInflater)
+        binding.container.addView(contentBinding.root)
+
         setSupportActionBar(binding.toolbar)
+        supportActionBar?.setDisplayHomeAsUpEnabled(true)
+
+        val postId = intent.getStringExtra("id")
+
+        val apiClient = ApiClient()
+        apiClient.callGetPostDetails(postId, object : Callback<Post> {
+            override fun onResponse(call: Call<Post>, response: Response<Post>) {
+                if (response.isSuccessful) {
+                    val post = response.body()
+                    if (post != null) {
+                        contentBinding.textViewDestinationName.text = post.titre
+                        contentBinding.textViewDescription.text =HtmlCompat.fromHtml(post.description, HtmlCompat.FROM_HTML_MODE_COMPACT)
+
+                        contentBinding.textViewPriceAndUnit.text = "${post.prix} ${post.unite}"
+
+                        Glide
+                            .with(this@FicheActivity)
+                            .load(post.brand)
+                            .centerCrop()
+                            .placeholder(R.drawable.loading)
+                            .into(contentBinding.imageViewDestination)
+                    }
+                } else {
+                    Log.e("FicheActivity", "Error fetching post details: ${response.message()}")
+                }
+            }
+
+            override fun onFailure(call: Call<Post>, t: Throwable) {
+                Log.e("FicheActivity", "API call failed: ${t.message}")
+            }
+        })
 
         binding.fab.setOnClickListener { view ->
-            Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-                .setAnchorView(R.id.fab)
-                .setAction("Action", null).show()
         }
     }
 
     override fun onSupportNavigateUp(): Boolean {
-        /*val navController = findNavController(R.id.nav_host_fragment_content_fiche)
-        return navController.navigateUp(appBarConfiguration)
-                || super.onSupportNavigateUp()*/
+        onBackPressed()
         return true
     }
 }
+
