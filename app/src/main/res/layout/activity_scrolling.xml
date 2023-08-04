@@ -71,21 +71,11 @@
                 android:text="Search" />
         </LinearLayout>
 
-<!--        <ScrollView-->
+<!--        <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"-->
+<!--            android:id="@+id/video"-->
 <!--            android:layout_width="match_parent"-->
-<!--            android:layout_height="match_parent"-->
-<!--            android:layout_marginTop="100dp"-->
-<!--            >-->
+<!--            android:layout_height="wrap_content" />-->
 
-<!--&lt;!&ndash;            <include layout="@layout/content_scrolling" />&ndash;&gt;-->
-
-<!--&lt;!&ndash;            <androidx.fragment.app.FragmentContainerView&ndash;&gt;-->
-<!--&lt;!&ndash;                android:id="@+id/fragmentContainerView"&ndash;&gt;-->
-<!--&lt;!&ndash;                android:name="com.example.gasytravel.AccueilItem"&ndash;&gt;-->
-<!--&lt;!&ndash;                android:layout_width="match_parent"&ndash;&gt;-->
-<!--&lt;!&ndash;                android:layout_height="wrap_content" />&ndash;&gt;-->
-<!--        </ScrollView>-->
-<!--        <include layout="@layout/content_scrolling" />-->
         <ProgressBar
             android:id="@+id/defaultProgress"
             android:layout_width="match_parent"
