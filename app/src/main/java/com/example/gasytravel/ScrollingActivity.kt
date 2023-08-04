@@ -162,6 +162,11 @@ class ScrollingActivity : AppCompatActivity() {
         return true
     }
 
+    private fun openSettings(){
+        val intent = Intent(this, SettingsActivity::class.java)
+        startActivity(intent)
+    }
+    
     private fun doDeconnexion(){
         val editor = getSharedPreferences("shared_prefs", Context.MODE_PRIVATE).edit()
 
@@ -177,6 +182,10 @@ class ScrollingActivity : AppCompatActivity() {
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         return when (item.itemId) {
+            R.id.action_settings -> {
+                openSettings()
+                true
+            }
             R.id.deconnexion ->{
                 doDeconnexion()
                 true

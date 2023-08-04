@@ -7,12 +7,14 @@ import com.example.gasytravel.model.LoginResponseModel
 import com.example.gasytravel.model.Post
 import com.example.gasytravel.model.UploadBodyModel
 import com.example.gasytravel.model.UploadResponseModel
+
 import okhttp3.Interceptor
 import okhttp3.OkHttpClient
 import okhttp3.Request
 import retrofit2.Callback
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
+
 import java.util.concurrent.TimeUnit
 
 class ApiClient (context : Context) {
@@ -27,7 +29,7 @@ class ApiClient (context : Context) {
             .header("x-auth-token", token ?: "")
             .build()
         chain.proceed(newRequest)
-    }
+  }
 
     private val httpClient = OkHttpClient.Builder()
         .addInterceptor(authInterceptor)
@@ -49,6 +51,10 @@ class ApiClient (context : Context) {
 
     fun callGetPosts(page: Int, callback: Callback<GetPostsModel>) {
         apiService.getPosts(page).enqueue(callback)
+    }
+    
+    fun callGetPostDetails(postId: String?, callback: Callback<Post>) {
+        apiService.getPostDetails(postId).enqueue(callback)
     }
 
     fun callUploadFile(body: UploadBodyModel, callback: Callback<UploadResponseModel>) {
