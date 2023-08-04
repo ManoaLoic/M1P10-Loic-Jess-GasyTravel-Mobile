@@ -37,6 +37,7 @@
                 android:scaleType="centerCrop"
                 android:src="@drawable/ic_farany" />
 
+
             <ImageView
                 android:layout_width="200dp"
                 android:layout_height="150dp"

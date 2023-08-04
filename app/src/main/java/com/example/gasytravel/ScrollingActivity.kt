@@ -1,5 +1,6 @@
 package com.example.gasytravel
 
+import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
@@ -15,7 +16,9 @@ import android.os.Handler
 import android.util.Log
 import com.example.gasytravel.model.GetPostsModel
 import com.example.gasytravel.model.Post
+import com.example.gasytravel.model.UserModel
 import com.example.gasytravel.service.ApiClient
+import com.example.gasytravel.ui.login.LoginActivity
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -29,7 +32,7 @@ class ScrollingActivity : AppCompatActivity() {
     private var totalAvailablePages = 5
     private lateinit var posts: ArrayList<Post>
     private var isLoadMore : Boolean = false
-    private var apiClient = ApiClient()
+    private var apiClient = ApiClient(this)
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -40,9 +43,16 @@ class ScrollingActivity : AppCompatActivity() {
         setSupportActionBar(findViewById(R.id.toolbar))
         binding.toolbarLayout.title = title
         binding.fab.setOnClickListener { view ->
-            val intent = Intent(this, SettingsActivity::class.java)
+            val intent = Intent(this, PostForm::class.java)
             startActivity(intent)
         }
+
+//        if (savedInstanceState == null) {
+//            val fragment = VideoPlayer.newInstance("https://media.geeksforgeeks.org/wp-content/uploads/20201217192146/Screenrecorder-2020-12-17-19-17-36-828.mp4?_=1")
+//            supportFragmentManager.beginTransaction()
+//                .replace(R.id.video, fragment)
+//                .commit()
+//        }
 
         initViews()
 
@@ -155,17 +165,29 @@ class ScrollingActivity : AppCompatActivity() {
     private fun openSettings(){
         val intent = Intent(this, SettingsActivity::class.java)
         startActivity(intent)
+    }
+    
+    private fun doDeconnexion(){
+        val editor = getSharedPreferences("shared_prefs", Context.MODE_PRIVATE).edit()
 
+        editor.putString("my_name", null)
+        editor.putString("my_email", null)
+        editor.putString("my_token", null)
+
+        editor.apply()
+        val intent = Intent(this, LoginActivity::class.java)
+        startActivity(intent)
+        finish()
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
-        // Handle action bar item clicks here. The action bar will
-        // automatically handle clicks on the Home/Up button, so long
-        // as you specify a parent activity in AndroidManifest.xml.
-
         return when (item.itemId) {
             R.id.action_settings -> {
                 openSettings()
+                true
+            }
+            R.id.deconnexion ->{
+                doDeconnexion()
                 true
             }
             else -> super.onOptionsItemSelected(item)

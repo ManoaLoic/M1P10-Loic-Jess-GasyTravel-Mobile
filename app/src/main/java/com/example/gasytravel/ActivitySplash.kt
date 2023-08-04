@@ -1,23 +1,35 @@
 package com.example.gasytravel
 
 import android.app.Activity
+import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import android.os.Handler
+import android.util.Log
+import com.example.gasytravel.ui.login.LoginActivity
 
 class ActivitySplash : Activity() {
 
-    private val SPLASH_SCREEN_DELAY: Long = 3000 // Durée du Splash Screen en millisecondes (3 secondes)
+    private val SPLASH_SCREEN_DELAY: Long = 1
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_splash)
 
-        // Définir un délai pour passer à l'activité suivante après la durée spécifiée
+        val sharedPreferences = getSharedPreferences("shared_prefs", Context.MODE_PRIVATE)
+        var token = sharedPreferences.getString("my_token", "")
+
         Handler().postDelayed({
-            val intent = Intent(this, ScrollingActivity::class.java) // Remplacez LoginActivity par l'activité que vous souhaitez afficher après le Splash Screen
-            startActivity(intent)
-            finish()
+            Log.e("DEBUG", "token $token")
+            if(token == null || token == ""){
+                val intent = Intent(this, LoginActivity::class.java)
+                startActivity(intent)
+                finish()
+            }else{
+                val intent = Intent(this, ScrollingActivity::class.java)
+                startActivity(intent)
+                finish()
+            }
         }, SPLASH_SCREEN_DELAY)
     }
 }
