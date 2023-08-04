@@ -5,6 +5,7 @@ import android.content.Intent
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.text.HtmlCompat
 import androidx.fragment.app.FragmentManager
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
@@ -29,7 +30,7 @@ class ScrollingActivityAdapter(private val fragmentManager: FragmentManager) :
         holder.binding.titre.text = post.titre
         holder.binding.type.text = post.type
         holder.binding.prix.text = "${post.prix} ${post.unite}"
-        holder.binding.description.text = post.description
+        holder.binding.description.text = HtmlCompat.fromHtml(post.description, HtmlCompat.FROM_HTML_MODE_COMPACT)
         Glide
             .with(holder.itemView)
             .load(post.brand)

@@ -15,7 +15,7 @@ data class GetPostsModel(
 data class Post(
     @SerializedName("_id")
     @Expose
-    public val id: String,
+    public val id: String?,
 
     @SerializedName("titre")
     @Expose
@@ -27,11 +27,11 @@ data class Post(
 
     @SerializedName("Prix")
     @Expose
-    public val prix: Double,
+    public val prix: Double?,
 
     @SerializedName("Unite")
     @Expose
-    public val unite: String,
+    public val unite: String?,
 
     @SerializedName("brand")
     @Expose

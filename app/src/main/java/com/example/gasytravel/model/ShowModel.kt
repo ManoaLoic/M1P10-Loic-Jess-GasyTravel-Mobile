@@ -3,6 +3,32 @@ package com.example.gasytravel.model
 import com.google.gson.annotations.Expose
 import com.google.gson.annotations.SerializedName
 
+data class UploadBodyModel(
+    @SerializedName("name")
+    @Expose
+    val name: String,
+    @SerializedName("file")
+    @Expose
+    val file: String
+)
+data class UploadResponseModel(
+    @SerializedName("message")
+    @Expose
+    val message: String,
+
+    @SerializedName("name")
+    @Expose
+    val name: String,
+
+    @SerializedName("type")
+    @Expose
+    val type: String,
+
+    @SerializedName("downloadURL")
+    @Expose
+    val downloadURL: String
+)
+
 data class ShowModel(
     @SerializedName("page")
     @Expose
