@@ -36,7 +36,7 @@ class FicheActivity : AppCompatActivity() {
 
         val postId = intent.getStringExtra("id")
 
-        val apiClient = ApiClient()
+        val apiClient = ApiClient(this)
         apiClient.callGetPostDetails(postId, object : Callback<Post> {
             override fun onResponse(call: Call<Post>, response: Response<Post>) {
                 if (response.isSuccessful) {

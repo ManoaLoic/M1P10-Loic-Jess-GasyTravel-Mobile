@@ -1,7 +1,13 @@
 <resources>
     <string name="app_name">GasyTravel</string>
 
-  <string name="action_settings">Parametres</string>
+    <string name="your_description">Bienvenue dans notre application de voyage</string>
+    <string name="logo_description">Logo de l\'application</string>
+
+    <string name="sign_up_prompt">Pas encore inscrit ? S\'inscrire</string>
+
+
+    <string name="action_settings">Parametres</string>
 
     <string name="title_activity_settings">SettingsActivity</string>
     <string name="large_text">Large text</string>

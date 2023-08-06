@@ -1,12 +1,21 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="background_dark">#121212</color>
+    <color name="background_dark">#000000</color>
     <color name="text_color_dark">#FFFFFF</color>
     <color name="accent_color_dark">#FF6200EE</color>
 
     <color name="background_light">#FFFFFF</color>
     <color name="text_color_light">#000000</color>
-    <color name="accent_color_light">#FFBB86FC</color>
+    <color name="accent_color_light">#9C27B0</color>
+    <color name="primaryColor">#FF01579B</color>
+    <color name="brown">#eaddcd</color>
+
+
+    <color name="light_gray">#F5F5F5</color>
+    <color name="dark_gray">#757575</color>
+    <color name="green">#4CAF50</color>
+    <color name="accent_color">#FF5722</color>
+    <color name="logo_description_color">#FFFFFF</color>
 
     <color name="purple_200">#FFBB86FC</color>
     <color name="purple_500">#FF6200EE</color>
@@ -21,4 +30,6 @@
     <color name="light_blue_A400">#FF00B0FF</color>
     <color name="black_overlay">#66000000</color>
     <color name="colorPrimary">#9C27B0</color>
+
+
 </resources>

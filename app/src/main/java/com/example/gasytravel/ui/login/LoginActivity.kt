@@ -1,5 +1,6 @@
 package com.example.gasytravel.ui.login
 
+
 import android.app.Activity
 import android.content.Context
 import android.content.Intent
@@ -19,10 +20,14 @@ import com.example.gasytravel.databinding.ActivityLoginBinding
 
 import com.example.gasytravel.R
 import com.example.gasytravel.ScrollingActivity
+import com.example.gasytravel.SignUpActivity
 import com.example.gasytravel.model.LoginModel
 import com.example.gasytravel.model.LoginResponseModel
 import com.example.gasytravel.model.UserModel
 import com.example.gasytravel.service.ApiClient
+import com.example.gasytravel.ui.login.LoggedInUserView
+import com.example.gasytravel.ui.login.LoginViewModel
+import com.example.gasytravel.ui.login.LoginViewModelFactory
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -43,6 +48,8 @@ class LoginActivity : AppCompatActivity() {
         val password = binding.password
         val login = binding.login
         val loading = binding.loading
+        val textInputError = binding.textInputError
+        val signUpText = binding.textView3
 
         loginViewModel = ViewModelProvider(this, LoginViewModelFactory())
             .get(LoginViewModel::class.java)
@@ -51,7 +58,7 @@ class LoginActivity : AppCompatActivity() {
             val loginState = it ?: return@Observer
 
             // disable login button unless both username / password is valid
-            login.isEnabled = loginState.isDataValid
+            login!!.isEnabled = loginState.isDataValid
 
             if (loginState.usernameError != null) {
                 username.error = getString(loginState.usernameError)
@@ -64,7 +71,7 @@ class LoginActivity : AppCompatActivity() {
         loginViewModel.loginResult.observe(this@LoginActivity, Observer {
             val loginResult = it ?: return@Observer
 
-            loading.visibility = View.GONE
+            loading!!.visibility = View.GONE
             if (loginResult.error != null) {
                 showLoginFailed(loginResult.error)
             }
@@ -103,17 +110,17 @@ class LoginActivity : AppCompatActivity() {
                 false
             }
 
-            login.setOnClickListener {
-                loading.visibility = View.VISIBLE
-                binding.textInputError?.text = ""
-                binding.textInputError?.visibility = View.GONE
+            login?.setOnClickListener {
+                loading!!.visibility = View.VISIBLE
+                textInputError!!.text = ""
+                textInputError.visibility = View.GONE
                 apiClient.callLogin(LoginModel(username.text.toString(), password.text.toString()), object : Callback<LoginResponseModel> {
                     override fun onFailure(call: Call<LoginResponseModel>, t: Throwable) {
                         t.printStackTrace()
                         Log.e("DEBUG", "exception", t)
                         loading.visibility = View.GONE
-                        binding.textInputError?.text = t.message
-                        binding.textInputError?.visibility = View.VISIBLE
+                        textInputError.text = t.message
+                        textInputError.visibility = View.VISIBLE
                     }
 
                     override fun onResponse(
@@ -137,14 +144,25 @@ class LoginActivity : AppCompatActivity() {
                                 finish()
                             }
                         }else{
-                            binding.textInputError?.text = response.errorBody()?.string()
-                            binding.textInputError?.visibility = View.VISIBLE
+                            textInputError.text = response.errorBody()?.string()
+                            textInputError.visibility = View.VISIBLE
                         }
                         loading.visibility = View.GONE
                     }
                 })
             }
         }
+
+        // Lier la méthode onSignUpClicked au lien "S'inscrire"
+        signUpText?.setOnClickListener {
+            onSignUpClicked(it)
+        }
+    }
+
+    fun onSignUpClicked(view: View) {
+        // Code pour rediriger vers le formulaire d'inscription
+        val intent = Intent(this, SignUpActivity::class.java)
+        startActivity(intent)
     }
 
     private fun updateUiWithUser(model: LoggedInUserView) {
