@@ -13,6 +13,10 @@ data class LoginModel(
 )
 
 data class UserModel(
+    @SerializedName("id")
+    @Expose
+    val id: String,
+
     @SerializedName("name")
     @Expose
     val name: String,
@@ -24,6 +28,10 @@ data class UserModel(
     @SerializedName("userType")
     @Expose
     val userType: String,
+
+    @SerializedName("deviceToken")
+    @Expose
+    var deviceToken: String
 )
 
 data class LoginResponseModel(

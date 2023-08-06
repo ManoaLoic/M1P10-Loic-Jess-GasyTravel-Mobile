@@ -23,6 +23,8 @@ import com.example.gasytravel.model.LoginModel
 import com.example.gasytravel.model.LoginResponseModel
 import com.example.gasytravel.model.UserModel
 import com.example.gasytravel.service.ApiClient
+import com.google.android.gms.tasks.OnCompleteListener
+import com.google.firebase.messaging.FirebaseMessaging
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -126,15 +128,43 @@ class LoginActivity : AppCompatActivity() {
                                 val editor = getSharedPreferences("shared_prefs", Context.MODE_PRIVATE).edit()
 
                                 val user : UserModel = response.user
+                                editor.putString("my_id", user.id)
                                 editor.putString("my_name", user.name)
                                 editor.putString("my_email", user.email)
                                 editor.putString("my_token", response.token)
 
                                 editor.apply()
 
-                                val i = Intent(this@LoginActivity, ScrollingActivity::class.java)
-                                startActivity(i)
-                                finish()
+                                FirebaseMessaging.getInstance().token.addOnCompleteListener(
+                                    OnCompleteListener { task ->
+                                    if (!task.isSuccessful) {
+                                        Log.w("ERROR FCM", "Fetching FCM registration token failed", task.exception)
+                                        return@OnCompleteListener
+                                    }
+
+                                    val token = task.result
+                                    var userBody : UserModel =  user
+                                    userBody.deviceToken = token
+
+                                    Log.e("DEBUG", "DEVICE TOKEN = $token $userBody ")
+                                    apiClient.fillDeviceToken(userBody, object : Callback<UserModel> {
+                                        override fun onFailure(call: Call<UserModel>, t: Throwable) {
+                                            t.printStackTrace()
+                                            Log.e("DEBUG", "exception")
+                                        }
+
+                                        override fun onResponse(
+                                            call: Call<UserModel>,
+                                            response: Response<UserModel>
+                                        ) {
+                                            if (response.isSuccessful) {
+                                                val i = Intent(this@LoginActivity, ScrollingActivity::class.java)
+                                                startActivity(i)
+                                                finish()
+                                            }
+                                        }
+                                    })
+                                })
                             }
                         }else{
                             binding.textInputError?.text = response.errorBody()?.string()

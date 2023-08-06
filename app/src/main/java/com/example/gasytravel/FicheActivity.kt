@@ -1,7 +1,9 @@
 package com.example.gasytravel
 
+import android.content.Intent
 import android.os.Bundle
 import android.util.Log
+import android.widget.Button
 import com.example.gasytravel.databinding.ActivityFicheBinding
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.WindowCompat
@@ -36,7 +38,7 @@ class FicheActivity : AppCompatActivity() {
 
         val postId = intent.getStringExtra("id")
 
-        val apiClient = ApiClient()
+        val apiClient = ApiClient(this)
         apiClient.callGetPostDetails(postId, object : Callback<Post> {
             override fun onResponse(call: Call<Post>, response: Response<Post>) {
                 if (response.isSuccessful) {
@@ -53,6 +55,15 @@ class FicheActivity : AppCompatActivity() {
                             .centerCrop()
                             .placeholder(R.drawable.loading)
                             .into(contentBinding.imageViewDestination)
+
+                        val videoButton: Button = contentBinding.video
+                        if(post.video.isNullOrBlank()) videoButton.isEnabled = false
+                        videoButton.setOnClickListener {
+                            val intent = Intent(this@FicheActivity, Video::class.java)
+                            intent.putExtra("videoUrl", post.video)
+                            this@FicheActivity.startActivity(intent)
+                        }
+
                     }
                 } else {
                     Log.e("FicheActivity", "Error fetching post details: ${response.message()}")

@@ -1,10 +1,12 @@
 <resources>
     <string name="app_name">GasyTravel</string>
 
-  <string name="action_settings">Parametres</string>
+    <string name="action_settings">Parametres</string>
 
     <string name="title_activity_settings">SettingsActivity</string>
     <string name="large_text">Large text</string>
+
+    <string name="default_notification_channel_id">Nouveau Post</string>
 
     <!-- Preference Titles -->
     <string name="messages_header">Messages</string>

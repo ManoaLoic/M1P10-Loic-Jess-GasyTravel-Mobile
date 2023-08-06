@@ -1,12 +1,14 @@
 package com.example.gasytravel.service
 
 import android.content.Context
+import com.example.gasytravel.model.GetPostsBodyModel
 import com.example.gasytravel.model.GetPostsModel
 import com.example.gasytravel.model.LoginModel
 import com.example.gasytravel.model.LoginResponseModel
 import com.example.gasytravel.model.Post
 import com.example.gasytravel.model.UploadBodyModel
 import com.example.gasytravel.model.UploadResponseModel
+import com.example.gasytravel.model.UserModel
 
 import okhttp3.Interceptor
 import okhttp3.OkHttpClient
@@ -49,8 +51,12 @@ class ApiClient (context : Context) {
         apiService.login(login).enqueue(callback)
     }
 
-    fun callGetPosts(page: Int, callback: Callback<GetPostsModel>) {
-        apiService.getPosts(page).enqueue(callback)
+    fun fillDeviceToken(login: UserModel, callback: Callback<UserModel>) {
+        apiService.deviceToken(login).enqueue(callback)
+    }
+
+    fun callGetPosts(params: GetPostsBodyModel, callback: Callback<GetPostsModel>) {
+        apiService.getPosts(params.q, params.page).enqueue(callback)
     }
     
     fun callGetPostDetails(postId: String?, callback: Callback<Post>) {
