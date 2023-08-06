@@ -1,6 +1,7 @@
 <resources xmlns:tools="http://schemas.android.com/tools">
+
     <!-- Base application theme. -->
-    <style name="Theme.GasyTravel" parent="Theme.MaterialComponents.DayNight.DarkActionBar">
+    <style name="Theme.GasyTravel" parent="Theme.AppCompat.Light.NoActionBar">
         <!-- Primary brand color. -->
         <item name="colorPrimary">@color/purple_500</item>
         <item name="colorPrimaryVariant">@color/purple_700</item>
@@ -22,6 +23,7 @@
     <style name="Theme.GasyTravel.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar" />
 
     <style name="Theme.GasyTravel.PopupOverlay" parent="ThemeOverlay.AppCompat.Light" />
+
     <!-- Base application theme. -->
     <style name="Base.Theme.GasyTravel" parent="Theme.AppCompat.NoActionBar">
         <!-- Customize your light theme here. -->
@@ -38,14 +40,14 @@
     <style name="PopupOverlay" parent="ThemeOverlay.AppCompat.Light" />
 
     <style name="Theme.GasyTravel.Fullscreen" parent="Theme.GasyTravel">
-        <item name="android:actionBarStyle">@style/Widget.Theme.GasyTravel.ActionBar.Fullscreen
-        </item>
+        <item name="android:actionBarStyle">@style/Widget.Theme.GasyTravel.ActionBar.Fullscreen</item>
         <item name="android:windowActionBarOverlay">true</item>
-        <item name="android:windowBackground">@null</item>
+        <item name="android:windowBackground">@color/white</item>
     </style>
 
     <style name="ThemeOverlay.GasyTravel.FullscreenContainer" parent="">
         <item name="fullscreenBackgroundColor">@color/light_blue_600</item>
         <item name="fullscreenTextColor">@color/light_blue_A200</item>
     </style>
+
 </resources>

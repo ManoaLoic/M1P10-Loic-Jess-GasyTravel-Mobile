@@ -1,18 +1,15 @@
 <resources>
 
-<!-- Thème par défaut de l'application sans ActionBar -->
+    <!-- Thème par défaut de l'application sans ActionBar -->
     <style name="AppTheme" parent="Theme.AppCompat.Light.NoActionBar">
-        <!-- Customize your theme here. -->
         <!-- Cacher l'icône de l'application dans la barre d'action -->
         <item name="android:icon">@android:color/transparent</item>
-        <!-- Cacher l'icône de l'application dans le style de la ActionBar -->
         <item name="android:actionBarStyle">@style/Widget.Theme.GasyTravel.ActionBar.Fullscreen</item>
     </style>
 
     <!-- Style pour cacher l'icône de l'application dans la ActionBar -->
     <style name="Widget.Theme.GasyTravel.ActionBar.Fullscreen" parent="Widget.AppCompat.ActionBar">
         <item name="android:background">@color/black_overlay</item>
-        <item name="android:icon">@android:color/transparent</item>
     </style>
 
     <!-- Thème de l'écran de démarrage (Splash Screen) sans ActionBar -->
@@ -23,18 +20,20 @@
         <item name="android:windowActionBar">false</item>
         <item name="android:windowFullscreen">true</item>
     </style>
-    <style name="Widget.Theme.GasyTravel.ButtonBar.Fullscreen" parent="">
-        <item name="android:background">@color/black_overlay</item>
-        <item name="android:buttonBarStyle">?android:attr/buttonBarStyle</item>
+
+    <style name="Theme.GasyTravel.Dark" parent="Theme.AppCompat">
+        <item name="android:windowBackground">@color/black</item>
+        <item name="android:textColorPrimary">@color/white</item>
     </style>
 
+    <!-- Style pour le texte en fond noir avec texte blanc (mode sombre) -->
     <style name="AppTheme_Dark" parent="AppTheme">
         <item name="android:background">@color/black</item>
         <item name="android:textColorPrimary">@color/white</item>
     </style>
 
+    <!-- Style pour le thème clair (par défaut) -->
     <style name="AppTheme_Light" parent="AppTheme">
     </style>
-
 
 </resources>

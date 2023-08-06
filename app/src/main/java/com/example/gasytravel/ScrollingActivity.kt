@@ -17,10 +17,13 @@ import com.example.gasytravel.databinding.ActivityScrollingBinding
 import com.example.gasytravel.model.TvShow
 import android.os.Handler
 import android.util.Log
+import androidx.preference.PreferenceManager
+
 import android.widget.Toast
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.core.content.ContextCompat
 import com.example.gasytravel.model.GetPostsBodyModel
+
 import com.example.gasytravel.model.GetPostsModel
 import com.example.gasytravel.model.Post
 import com.example.gasytravel.model.UserModel
@@ -47,11 +50,15 @@ class ScrollingActivity : AppCompatActivity() {
     private var q : String = ""
 
     override fun onCreate(savedInstanceState: Bundle?) {
-        Log.e("DEBUG", "RECEVOIR Notification ${
-            MyFirebaseMessagingService.PreferenceHelper.getRecevoirNotification(
-                this
-            )
-        }")
+        val sharedPref = PreferenceManager.getDefaultSharedPreferences(this)
+        val isDarkMode = sharedPref.getBoolean("Dark mode", false)
+
+        if (isDarkMode) {
+            setTheme(R.style.AppTheme_Dark)
+        } else {
+            setTheme(R.style.AppTheme_Light)
+        }
+
         super.onCreate(savedInstanceState)
 
         binding = ActivityScrollingBinding.inflate(layoutInflater)

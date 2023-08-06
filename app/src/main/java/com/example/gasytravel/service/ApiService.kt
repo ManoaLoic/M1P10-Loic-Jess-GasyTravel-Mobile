@@ -6,6 +6,10 @@ import com.example.gasytravel.model.GetPostsModel
 import com.example.gasytravel.model.Post
 import com.example.gasytravel.model.LoginModel
 import com.example.gasytravel.model.LoginResponseModel
+
+import com.example.gasytravel.model.SignUpModel
+import com.example.gasytravel.model.SignUpResponseModel
+
 import com.example.gasytravel.model.UploadBodyModel
 import com.example.gasytravel.model.UploadResponseModel
 import com.example.gasytravel.model.UserModel
@@ -37,7 +41,10 @@ interface ApiService {
     @POST("api/auth")
     fun login(@Body login: LoginModel): Call<LoginResponseModel>
 
-    @POST("/users/device-token")
+    @POST("users")
+    fun signUp(@Body signUpModel: SignUpModel): Call<SignUpResponseModel>
+
+  @POST("/users/device-token")
     fun deviceToken(@Body user: UserModel): Call<UserModel>
 
 }

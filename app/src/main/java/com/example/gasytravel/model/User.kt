@@ -43,3 +43,19 @@ data class LoginResponseModel(
     @Expose
     val user: UserModel,
 )
+
+data class SignUpModel(
+    val name: String,
+    val email: String,
+    val password: String
+)
+
+data class SignUpResponseModel(
+    @SerializedName("success")
+    @Expose
+    val success: Boolean,
+
+    @SerializedName("message")
+    @Expose
+    val message: String?
+)

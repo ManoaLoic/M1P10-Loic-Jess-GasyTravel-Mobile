@@ -1,11 +1,15 @@
 package com.example.gasytravel.service
 
 import android.content.Context
+import retrofit2.Call
+
 import com.example.gasytravel.model.GetPostsBodyModel
 import com.example.gasytravel.model.GetPostsModel
 import com.example.gasytravel.model.LoginModel
 import com.example.gasytravel.model.LoginResponseModel
 import com.example.gasytravel.model.Post
+import com.example.gasytravel.model.SignUpModel
+import com.example.gasytravel.model.SignUpResponseModel
 import com.example.gasytravel.model.UploadBodyModel
 import com.example.gasytravel.model.UploadResponseModel
 import com.example.gasytravel.model.UserModel
@@ -20,7 +24,7 @@ import retrofit2.converter.gson.GsonConverterFactory
 import java.util.concurrent.TimeUnit
 
 class ApiClient (context : Context) {
-    private val BASE_URL = "http://192.168.88.18:5000"
+    private val BASE_URL = "http://192.168.88.19:5000"
     private val context: Context = context
 
     private val authInterceptor = Interceptor { chain ->
@@ -51,6 +55,14 @@ class ApiClient (context : Context) {
         apiService.login(login).enqueue(callback)
     }
 
+    fun callSignUp(signUpModel: SignUpModel, callback: Callback<SignUpResponseModel>) {
+        val call: Call<SignUpResponseModel> = apiService.signUp(signUpModel)
+        call.enqueue(callback)
+    }
+
+    fun callGetPosts(page: Int, callback: Callback<GetPostsModel>) {
+        apiService.getPosts(page).enqueue(callback)
+        
     fun fillDeviceToken(login: UserModel, callback: Callback<UserModel>) {
         apiService.deviceToken(login).enqueue(callback)
     }
