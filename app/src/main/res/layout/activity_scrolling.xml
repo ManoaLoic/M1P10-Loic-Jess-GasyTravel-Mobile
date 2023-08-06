@@ -57,7 +57,7 @@
             android:orientation="horizontal">
 
             <EditText
-                android:id="@+id/editTextTextPersonName2"
+                android:id="@+id/q"
                 android:layout_width="254dp"
                 android:layout_height="wrap_content"
                 android:ems="10"
@@ -65,7 +65,7 @@
                 android:inputType="textPersonName" />
 
             <Button
-                android:id="@+id/button"
+                android:id="@+id/search"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Search" />

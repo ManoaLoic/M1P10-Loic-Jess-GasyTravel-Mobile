@@ -10,17 +10,17 @@ import com.example.gasytravel.ui.login.LoginActivity
 
 class ActivitySplash : Activity() {
 
-    private val SPLASH_SCREEN_DELAY: Long = 1
+    private val SPLASH_SCREEN_DELAY: Long = 3000
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_splash)
 
         val sharedPreferences = getSharedPreferences("shared_prefs", Context.MODE_PRIVATE)
-        var token = sharedPreferences.getString("my_token", "")
+        var token = sharedPreferences.getString("my_token", null)
 
         Handler().postDelayed({
-            Log.e("DEBUG", "token $token")
+            Log.e("DEBUG", "token test $token")
             if(token == null || token == ""){
                 val intent = Intent(this, LoginActivity::class.java)
                 startActivity(intent)

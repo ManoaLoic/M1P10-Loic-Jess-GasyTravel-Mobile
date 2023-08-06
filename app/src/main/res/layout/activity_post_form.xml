@@ -135,6 +135,19 @@
                 android:adjustViewBounds="true" />
 
             <Button
+                android:id="@+id/ajout_video"
+                android:layout_width="177dp"
+                android:layout_height="wrap_content"
+                android:text="Video de demonstration" />
+
+            <TextView
+                android:id="@+id/video"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Description"
+                android:visibility="gone"/>
+
+            <Button
                 android:id="@+id/poster"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"

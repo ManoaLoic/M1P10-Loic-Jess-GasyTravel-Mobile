@@ -1,5 +1,6 @@
 package com.example.gasytravel
 
+import android.content.SharedPreferences
 import android.os.Bundle
 import android.view.MenuItem
 import androidx.appcompat.app.AppCompatActivity
@@ -38,9 +39,35 @@ class SettingsActivity : AppCompatActivity() {
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
     }
 
-    class SettingsFragment : PreferenceFragmentCompat() {
+    class SettingsFragment : PreferenceFragmentCompat() ,
+        SharedPreferences.OnSharedPreferenceChangeListener{
         override fun onCreatePreferences(savedInstanceState: Bundle?, rootKey: String?) {
             setPreferencesFromResource(R.xml.root_preferences, rootKey)
+        }
+
+        override fun onResume() {
+            super.onResume()
+            preferenceManager.sharedPreferences.registerOnSharedPreferenceChangeListener(this)
+        }
+
+        override fun onPause() {
+            super.onPause()
+            preferenceManager.sharedPreferences.unregisterOnSharedPreferenceChangeListener(this)
+        }
+
+        override fun onSharedPreferenceChanged(sharedPreferences: SharedPreferences?, key: String?) {
+            if (key == "Recevoir notification") {
+                val receiveNotification = sharedPreferences?.getBoolean(key, true)
+                if (receiveNotification == true) {
+                    val editor = sharedPreferences?.edit()
+                    editor?.putBoolean(key, true)
+                    editor?.apply()
+                } else {
+                    val editor = sharedPreferences?.edit()
+                    editor?.putBoolean(key, false)
+                    editor?.apply()
+                }
+            }
         }
     }
 }

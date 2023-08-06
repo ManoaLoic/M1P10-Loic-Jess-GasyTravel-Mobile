@@ -41,9 +41,7 @@ class ScrollingActivityAdapter(private val fragmentManager: FragmentManager) :
 
         holder.bind(post, object : OnItemClickListener {
             override fun onItemClick(context: Context, post: Post) {
-                // Handle the click event here, e.g., start a new activity
                 val intent = Intent(context, FicheActivity::class.java)
-                // Pass any data to the new activity if needed
                 intent.putExtra("id", post.id)
                 context.startActivity(intent)
             }
@@ -72,9 +70,12 @@ class ScrollingActivityAdapter(private val fragmentManager: FragmentManager) :
         }
 
 
-    fun updateList(tvShowList: ArrayList<Post>, oldCount: Int, tvShowListSize: Int) {
+    fun updateList(tvShowList: ArrayList<Post>, oldCount: Int, tvShowListSize: Int, add : Boolean) {
         this.tvShowList = tvShowList
         notifyItemRangeInserted(oldCount, tvShowListSize)
+        if(!add){
+            notifyDataSetChanged()
+        }
     }
 }
 interface OnItemClickListener {

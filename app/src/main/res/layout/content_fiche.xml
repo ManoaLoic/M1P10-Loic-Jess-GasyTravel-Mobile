@@ -85,7 +85,12 @@
         app:layout_constraintEnd_toEndOf="parent"
         android:layout_marginTop="16dp"/>
 
-
+    <Button
+        android:id="@+id/video"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toBottomOf="@id/textViewPriceAndUnit"
+        android:text="Video de demonstration" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

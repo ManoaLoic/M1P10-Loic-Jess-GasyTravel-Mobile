@@ -3,6 +3,15 @@ package com.example.gasytravel.model
 import com.google.gson.annotations.Expose
 import com.google.gson.annotations.SerializedName
 
+data class GetPostsBodyModel(
+    @SerializedName("page")
+    @Expose
+    val page: Int?,
+    @SerializedName("q")
+    @Expose
+    val q: String?
+)
+
 data class GetPostsModel(
     @SerializedName("maxPage")
     @Expose
@@ -36,6 +45,10 @@ data class Post(
     @SerializedName("brand")
     @Expose
     public val brand: String,
+
+    @SerializedName("video")
+    @Expose
+    public val video: String,
 
     @SerializedName("Type")
     @Expose
