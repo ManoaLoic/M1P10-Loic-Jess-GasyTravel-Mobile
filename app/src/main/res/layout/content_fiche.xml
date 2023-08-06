@@ -69,8 +69,14 @@
         app:layout_constraintTop_toBottomOf="@id/textViewDescription"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        android:layout_marginTop="16dp"
-        android:text="À partir de 500€ par personne" />
+        android:layout_marginTop="16dp"/>
+
+    <Button
+        android:id="@+id/video"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toBottomOf="@id/textViewPriceAndUnit"
+        android:text="Video de demonstration" />
 
     <TextView
         android:id="@+id/textViewDescription"

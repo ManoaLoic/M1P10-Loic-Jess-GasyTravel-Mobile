@@ -1,14 +1,18 @@
 package com.example.gasytravel.service
 
+import com.example.gasytravel.model.GetPostsBodyModel
 import com.example.gasytravel.model.GetPostsModel
 
 import com.example.gasytravel.model.Post
 import com.example.gasytravel.model.LoginModel
 import com.example.gasytravel.model.LoginResponseModel
+
 import com.example.gasytravel.model.SignUpModel
 import com.example.gasytravel.model.SignUpResponseModel
+
 import com.example.gasytravel.model.UploadBodyModel
 import com.example.gasytravel.model.UploadResponseModel
+import com.example.gasytravel.model.UserModel
 
 import retrofit2.Call
 import retrofit2.http.Body
@@ -23,7 +27,7 @@ import retrofit2.http.Query
 interface ApiService {
 
     @GET("posts")
-    fun getPosts(@Query("page") page: Int): Call<GetPostsModel>
+    fun getPosts(@Query("q") q: String?, @Query("page") page: Int?): Call<GetPostsModel>
 
     @GET("posts/{id}")
     fun getPostDetails(@Path("id") postId: String?): Call<Post>
@@ -39,4 +43,8 @@ interface ApiService {
 
     @POST("users")
     fun signUp(@Body signUpModel: SignUpModel): Call<SignUpResponseModel>
+
+  @POST("/users/device-token")
+    fun deviceToken(@Body user: UserModel): Call<UserModel>
+
 }

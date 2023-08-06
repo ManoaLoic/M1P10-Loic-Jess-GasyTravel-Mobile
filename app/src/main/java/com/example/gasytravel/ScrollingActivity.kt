@@ -1,7 +1,10 @@
 package com.example.gasytravel
 
+import android.Manifest
 import android.content.Context
 import android.content.Intent
+import android.content.pm.PackageManager
+import android.os.Build
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import android.view.Menu
@@ -15,11 +18,21 @@ import com.example.gasytravel.model.TvShow
 import android.os.Handler
 import android.util.Log
 import androidx.preference.PreferenceManager
+
+import android.widget.Toast
+import androidx.activity.result.contract.ActivityResultContracts
+import androidx.core.content.ContextCompat
+import com.example.gasytravel.model.GetPostsBodyModel
+
 import com.example.gasytravel.model.GetPostsModel
 import com.example.gasytravel.model.Post
 import com.example.gasytravel.model.UserModel
 import com.example.gasytravel.service.ApiClient
 import com.example.gasytravel.ui.login.LoginActivity
+import com.google.android.gms.common.GoogleApiAvailability
+import com.google.android.gms.tasks.OnCompleteListener
+import com.google.firebase.messaging.FirebaseMessaging
+
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -34,6 +47,7 @@ class ScrollingActivity : AppCompatActivity() {
     private lateinit var posts: ArrayList<Post>
     private var isLoadMore : Boolean = false
     private var apiClient = ApiClient(this)
+    private var q : String = ""
 
     override fun onCreate(savedInstanceState: Bundle?) {
         val sharedPref = PreferenceManager.getDefaultSharedPreferences(this)
@@ -57,15 +71,44 @@ class ScrollingActivity : AppCompatActivity() {
             startActivity(intent)
         }
 
-//        if (savedInstanceState == null) {
-//            val fragment = VideoPlayer.newInstance("https://media.geeksforgeeks.org/wp-content/uploads/20201217192146/Screenrecorder-2020-12-17-19-17-36-828.mp4?_=1")
-//            supportFragmentManager.beginTransaction()
-//                .replace(R.id.video, fragment)
-//                .commit()
-//        }
+        binding.search.setOnClickListener { view ->
+            q = binding.q.text.toString()
+            currentPage = 1
+            loadPageList(false)
+        }
 
         initViews()
+    }
 
+    private val requestPermissionLauncher = registerForActivityResult(
+        ActivityResultContracts.RequestPermission(),
+    ) { isGranted: Boolean ->
+        if (isGranted) {
+//            GoogleApiAvailability.makeGooglePlayServicesAvailable()
+            Log.e("DEBUG", "Granted !!!!!!!!!")
+        } else {
+            Log.e("DEBUG", "No !!!!!!!!!")
+            // TODO: Inform user that that your app will not show notifications.
+        }
+    }
+
+    private fun askNotificationPermission() {
+        // This is only necessary for API level >= 33 (TIRAMISU)
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
+            if (ContextCompat.checkSelfPermission(this, Manifest.permission.POST_NOTIFICATIONS) ==
+                PackageManager.PERMISSION_GRANTED
+            ) {
+                // FCM SDK (and your app) can post notifications.
+            } else if (shouldShowRequestPermissionRationale(Manifest.permission.POST_NOTIFICATIONS)) {
+                // TODO: display an educational UI explaining to the user the features that will be enabled
+                //       by them granting the POST_NOTIFICATION permission. This UI should provide the user
+                //       "OK" and "No thanks" buttons. If the user selects "OK," directly request the permission.
+                //       If the user selects "No thanks," allow the user to continue without notifications.
+            } else {
+                // Directly ask for the permission
+                requestPermissionLauncher.launch(Manifest.permission.POST_NOTIFICATIONS)
+            }
+        }
     }
 
     private fun initViews() {
@@ -92,46 +135,26 @@ class ScrollingActivity : AppCompatActivity() {
                         isLoadMore = true
                         Log.e("DEBUG", "Called on  ${distanceToEnd} page = ${currentPage}")
                         currentPage += 1
-                        loadPageList()
+                        loadPageList(true)
                     }
                 }
             }
         })
-        loadPageList()
+        loadPageList(true)
     }
 
-    private fun loadPageList() {
+    private fun loadPageList(add : Boolean) {
         toogleLoading()
-        val oldCount = posts.size
-        val handler = Handler()
-        val timeoutInMillis : Long = 5
-//        handler.postDelayed({
-//            totalAvailablePages = 5
-//            val temp = mutableListOf<TvShow>()
-//            temp.add(TvShow(1, "Show 1", "Ongoing", "https://example.com/show1_thumbnail.jpg"))
-//            temp.add(TvShow(2, "Show 1", "Ongoing", "https://example.com/show1_thumbnail.jpg"))
-//            temp.add(TvShow(3, "Show 1", "Ongoing", "https://example.com/show1_thumbnail.jpg"))
-//            temp.add(TvShow(4, "Show 1", "Ongoing", "https://example.com/show1_thumbnail.jpg"))
-//            temp.add(TvShow(5, "Show 1", "Ongoing", "https://example.com/show1_thumbnail.jpg"))
-//            temp.add(TvShow(6, "Show 1", "Ongoing", "https://example.com/show1_thumbnail.jpg"))
-//            temp.add(TvShow(1, "Show 1", "Ongoing", "https://example.com/show1_thumbnail.jpg"))
-//            temp.add(TvShow(1, "Show 1", "Ongoing", "https://example.com/show1_thumbnail.jpg"))
-//            temp.add(TvShow(1, "Show 1", "Ongoing", "https://example.com/show1_thumbnail.jpg"))
-//            temp.add(TvShow(1, "Show 1", "Ongoing", "https://example.com/show1_thumbnail.jpg"))
-//            tvShowList.addAll(temp)
-//            mainActivityAdapter.updateList(tvShowList, oldCount, tvShowList.size)
-//            isLoadMore = false
-//            toogleLoading()
-//        }, timeoutInMillis)
-        apiClient.callGetPosts(currentPage, object : Callback<GetPostsModel> {
+        apiClient.callGetPosts(GetPostsBodyModel(currentPage, q), object : Callback<GetPostsModel> {
             override fun onResponse(call: Call<GetPostsModel>, response: Response<GetPostsModel>) {
                 if (response.isSuccessful) {
                     val getPostModel = response.body()
                     if (getPostModel != null) {
                         val oldCount = posts.size
                         totalAvailablePages = getPostModel.maxPage
+                        if(!add) posts = ArrayList()
                         posts.addAll(getPostModel.docs)
-                        mainActivityAdapter.updateList(posts, oldCount, posts.size)
+                        mainActivityAdapter.updateList(posts, oldCount, posts.size, add)
                         Log.e(
                             TAG,
                             "oldCount $oldCount totalAvailablePages $totalAvailablePages tvShowList ${posts.size}"
