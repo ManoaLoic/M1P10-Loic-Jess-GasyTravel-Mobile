@@ -59,7 +59,7 @@ class ApiClient (context : Context) {
         val call: Call<SignUpResponseModel> = apiService.signUp(signUpModel)
         call.enqueue(callback)
     }
-
+    
     fun fillDeviceToken(login: UserModel, callback: Callback<UserModel>) {
         apiService.deviceToken(login).enqueue(callback)
     }

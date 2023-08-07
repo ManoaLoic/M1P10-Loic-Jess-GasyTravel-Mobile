@@ -57,7 +57,10 @@ class FicheActivity : AppCompatActivity() {
                             .into(contentBinding.imageViewDestination)
 
                         val videoButton: Button = contentBinding.video
-                        if(post.video.isNullOrBlank()) videoButton.isEnabled = false
+                        if(post.video.isNullOrBlank()) {
+                            videoButton.isEnabled = false
+                            videoButton.text = "Pas de video disponible"
+                        }
                         videoButton.setOnClickListener {
                             val intent = Intent(this@FicheActivity, Video::class.java)
                             intent.putExtra("videoUrl", post.video)
