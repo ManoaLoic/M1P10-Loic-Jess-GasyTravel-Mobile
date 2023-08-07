@@ -17,8 +17,8 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             app:contentScrim="?attr/colorPrimary"
-            app:layout_scrollFlags="scroll|exitUntilCollapsed"
-            app:toolbarId="@+id/toolbar">
+            app:toolbarId="@+id/toolbar"
+            android:background="@color/brown">
 
             <androidx.appcompat.widget.Toolbar
                 android:id="@+id/toolbar"
@@ -37,12 +37,13 @@
         android:layout_marginEnd="@dimen/fab_margin"
         app:layout_anchor="@id/app_bar"
         app:layout_anchorGravity="bottom|end"
-        app:srcCompat="@android:drawable/ic_dialog_email" />
+        app:srcCompat="@drawable/plus" />
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_marginTop="@dimen/app_bar_height"
+        app:layout_constraintTop_toBottomOf="@id/toolbar_layout"
         android:orientation="vertical">
 
         <LinearLayout
@@ -57,13 +58,15 @@
                 android:layout_width="254dp"
                 android:layout_height="wrap_content"
                 android:ems="10"
-                android:hint="search a place ... "
-                android:inputType="textPersonName" />
+                android:hint="Rechercher une place ... "
+                android:inputType="textPersonName"
+                android:background="@drawable/edit_text_bottom_border"/>
 
             <Button
                 android:id="@+id/search"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:background="@drawable/rounded_button"
                 android:text="Search" />
         </LinearLayout>
 
