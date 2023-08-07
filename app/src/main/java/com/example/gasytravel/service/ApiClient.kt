@@ -24,7 +24,7 @@ import retrofit2.converter.gson.GsonConverterFactory
 import java.util.concurrent.TimeUnit
 
 class ApiClient (context : Context) {
-    private val BASE_URL = "http://192.168.88.18:5000"
+    private val BASE_URL = "https://gasytravel.web.app"
     private val context: Context = context
 
     private val authInterceptor = Interceptor { chain ->
