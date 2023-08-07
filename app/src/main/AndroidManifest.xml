@@ -33,13 +33,13 @@
             android:label="@string/title_activity_login" />
         <activity
             android:name=".PostForm"
-            android:exported="false" /> <!-- Utilise le thème sans ActionBar -->
-        <!-- Autres activités (FicheActivity, SettingsActivity, ScrollingActivity) -->
+            android:exported="false" />
+
         <activity
             android:name=".FicheActivity"
             android:exported="true"
-            android:label="@string/title_activity_fiche"
-            android:theme="@style/AppTheme" /> <!-- Utilise le thème sans ActionBar -->
+            android:label="Fiche"
+            android:theme="@style/AppTheme" />
         <activity
             android:name=".Detail"
             android:configChanges="orientation|keyboardHidden|screenSize"
@@ -50,12 +50,12 @@
             android:name=".SettingsActivity"
             android:exported="true"
             android:label="@string/title_activity_settings"
-            android:theme="@style/AppTheme" /> <!-- Utilise le thème sans ActionBar -->
+            android:theme="@style/AppTheme" />
         <activity
             android:name=".ScrollingActivity"
             android:exported="true"
             android:label="@string/app_name"
-            android:theme="@style/AppTheme" /> <!-- Utilise le thème sans ActionBar -->
+            android:theme="@style/AppTheme" />
         <!-- Activité Splash avec le thème spécifique -->
         <activity
             android:name=".ActivitySplash"

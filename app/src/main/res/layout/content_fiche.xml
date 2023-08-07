@@ -6,7 +6,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:padding="16dp"
-    android:background="@android:color/white">
+    android:background="@color/brown">
 
     <!-- Background card with elevation -->
     <androidx.cardview.widget.CardView
@@ -34,8 +34,8 @@
                 <!-- Image View with rounded background -->
                 <ImageView
                     android:id="@+id/imageViewDestination"
-                    android:layout_width="200dp"
-                    android:layout_height="150dp"
+                    android:layout_width="300dp"
+                    android:layout_height="200dp"
                     android:layout_marginEnd="16dp"
                     android:scaleType="centerCrop"
                     android:src="@drawable/loading"
@@ -53,7 +53,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Nom de la destination"
-        android:textColor="@color/accent_color"
+        android:textColor="@color/primaryColor"
         android:textSize="24sp"
         app:layout_constraintTop_toBottomOf="@id/cardView"
         app:layout_constraintStart_toStartOf="parent"

@@ -59,9 +59,6 @@ class ApiClient (context : Context) {
         val call: Call<SignUpResponseModel> = apiService.signUp(signUpModel)
         call.enqueue(callback)
     }
-
-    fun callGetPosts(page: Int, callback: Callback<GetPostsModel>) {
-        apiService.getPosts(page).enqueue(callback)
         
     fun fillDeviceToken(login: UserModel, callback: Callback<UserModel>) {
         apiService.deviceToken(login).enqueue(callback)
