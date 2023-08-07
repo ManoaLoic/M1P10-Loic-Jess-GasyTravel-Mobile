@@ -1,0 +1,47 @@
+{
+  "project_info": {
+    "project_number": "497992565930",
+    "project_id": "gasytravel",
+    "storage_bucket": "gasytravel.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:497992565930:android:99d640d7cf2ec8a8dd3cd3",
+        "android_client_info": {
+          "package_name": "com.example.gasytravel"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "497992565930-plia0ksfqs7gqt8emg2tdq6ca7vfqgve.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.gasytravel",
+            "certificate_hash": "d9804f29a1a6272253bfa88a0a19ed7c2ba1cb1b"
+          }
+        },
+        {
+          "client_id": "497992565930-17o5kafep588gr6enhmf7bgbiqofh6n2.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCjnd8xYEzX7lrVRb1zluPfErIk--hGHQ4"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "497992565930-17o5kafep588gr6enhmf7bgbiqofh6n2.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
