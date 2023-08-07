@@ -29,8 +29,8 @@ class ScrollingActivityAdapter(private val fragmentManager: FragmentManager) :
     override fun onBindViewHolder(holder: MainActivityAdapterHolder, position: Int) {
         val post : Post = tvShowList[position]
         holder.binding.titre.text = post.titre
-        holder.binding.type.text = post.type
-        holder.binding.prix.text = "${post.prix} ${post.unite}"
+        holder.binding.type.text = "Type : ${post.type}"
+        holder.binding.prix.text = "Prix : ${post.prix} Ar"
         holder.binding.description.text = HtmlCompat.fromHtml(post.description, HtmlCompat.FROM_HTML_MODE_COMPACT)
         Glide
             .with(holder.itemView)
